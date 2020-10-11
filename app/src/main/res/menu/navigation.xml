@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@android:drawable/ic_lock_idle_lock"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@android:drawable/sym_action_chat"
+        android:title="Chat" />
+
+    <item
+        android:id="@+id/navigation_board"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Board" />
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Setting" />
+</menu>
