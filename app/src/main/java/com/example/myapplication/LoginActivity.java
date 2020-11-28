@@ -30,7 +30,6 @@ public class LoginActivity extends Activity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         if(firebaseAuth.getCurrentUser() != null) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
