@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@android:drawable/ic_lock_idle_lock"
+        android:icon="@drawable/ic_home"
         android:title="Home" />
 
     <item
@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/navigation_board"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_chat_black"
         android:title="Board" />
     <item
         android:id="@+id/navigation_setting"
