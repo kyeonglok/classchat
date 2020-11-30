@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.myapplication.Navigation.BoardFragment;
+import com.example.myapplication.Navigation.Board.BoardFragment;
 import com.example.myapplication.Navigation.ChatFragment;
 import com.example.myapplication.Navigation.HomeFragment;
 import com.example.myapplication.Navigation.SettingFragment;

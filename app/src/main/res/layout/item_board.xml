@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fff"
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ㄱㅇㅅ 네트워크 과제 하신분?"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#363636"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        app:layout_constraintLeft_toRightOf="@id/tv_nickname"
+        app:layout_constraintTop_toTopOf="@id/tv_nickname"
+        app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
+        android:id="@+id/divider_1"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_width="1dp"
+        android:layout_height="12dp"
+        android:background="#ededed"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:textSize="12sp"
+        android:textColor="#989898"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1분 전"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:textSize="14sp"
+        android:textColor="#363636"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="삐슝빠슝"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="익명"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="13dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="10dp"
+        android:background="#e6e6e6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+
+    <ImageButton
+        android:id="@+id/btn_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/class_board_ic_heart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#727272"
+        android:text="좋아요 31"
+        android:layout_marginLeft="3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_heart"
+        app:layout_constraintStart_toEndOf="@+id/btn_heart"
+        app:layout_constraintTop_toTopOf="@+id/btn_heart" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/class_board_ic_reply"
+        app:layout_constraintBottom_toBottomOf="@+id/textView27"
+        app:layout_constraintStart_toEndOf="@+id/textView27"
+        app:layout_constraintTop_toTopOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/tv_comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:textSize="12sp"
+        android:textColor="#727272"
+        android:text="댓글 2"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
