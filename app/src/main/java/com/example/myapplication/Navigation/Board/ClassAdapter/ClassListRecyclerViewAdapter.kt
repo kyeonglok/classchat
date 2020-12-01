@@ -33,7 +33,6 @@ class ClassListRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHol
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.tv_class_name.text = classList[position].className
         holder.itemView.setOnClickListener {v->
-            //itemClickListener.onClick(it,position)
             var intent = Intent(v.context,BoardInsideActivity::class.java)
             intent.putExtra("className",classList[position].className)
             intent.putExtra("classId",classList[position].classId)

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fff"
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="9dp"
+            android:background="@drawable/class_board_detail_reply_ic_replyprofile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#363636"
+            android:textStyle="bold"
+            android:text="익명의 김찬호"
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+            app:layout_constraintStart_toEndOf="@+id/img_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_profile" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="20dp"
+        android:text="11/30 21:53"
+        android:textColor="#989898"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content"
+        app:layout_constraintVertical_bias="0.428" />
+
+    <Button
+        android:id="@+id/btn_reply_more"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/class_board_detail_reply_ic_more"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="9dp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@김찬호"
+        android:visibility="invisible"
+        android:layout_marginTop="7dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/layout"
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="제육좀 볶아온나"
+        android:textColor="#363636"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tag"
+        app:layout_constraintStart_toStartOf="@+id/tv_tag" />
+
+    <ImageButton
+        android:id="@+id/btn_heart"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="13dp"
+        android:background="@drawable/class_board_detail_ic_heart_unactivated"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_heart_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#727272"
+        android:text="1"
+        android:layout_marginLeft="3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_heart"
+        app:layout_constraintStart_toEndOf="@+id/btn_heart"
+        app:layout_constraintTop_toTopOf="@+id/btn_heart" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button_next"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_board_write"
+                android:theme="@style/AppTheme.AppBarOverlay" />
+            <TextView
+                android:id="@+id/tv_board_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="26dp"
+                android:text="종합설계프로젝트 게시판"
+                android:textColor="#674fee"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_board_category"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="17dp"
+                android:background="@null"
+                android:textSize="16sp"
+                android:hint="제목 "
+                />
+
+            <View
+                android:id="@+id/view8"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="10dp"
+                android:background="#e6e6e6"/>
+
+            <EditText
+                android:id="@+id/tv_explain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginBottom="400dp"
+                android:layout_marginTop="13dp"
+                android:background="@null"
+                android:textSize="16sp"
+                android:hint="눌러서 내용을 입력해 주세요"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/board_posting_btn_cam" />
+
+
+
+</RelativeLayout>

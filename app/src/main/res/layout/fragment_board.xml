@@ -16,12 +16,12 @@
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/img_class_frag_logo"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="12dp"
-            android:src="@android:drawable/star_big_on"
+            android:src="@drawable/logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -30,7 +30,7 @@
             android:layout_width="39dp"
             android:layout_height="35dp"
             android:layout_marginRight="12dp"
-            android:background="@android:drawable/ic_search_category_default"
+            android:background="@drawable/class_btn_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/img_class_frag_logo"
             app:layout_constraintBottom_toBottomOf="@id/img_class_frag_logo"/>
@@ -40,18 +40,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/timeTable10"
+        android:background="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_logo">
         <ImageView
             android:id="@+id/img_class_board"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="21dp"
             android:layout_marginBottom="12dp"
-            android:src="@drawable/ic_chat_black"
+            android:src="@drawable/class_ic_board"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
