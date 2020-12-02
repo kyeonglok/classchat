@@ -1,6 +1,7 @@
 package com.example.myapplication.Navigation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,14 +21,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.LoginActivity;
 import com.example.myapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingFragment extends Fragment {
+    private Button logoutButton;
     private View view;
     private Context context;
     private WebView mWebView;
     private WebSettings mWebSettings;
     private EditText etPassword, etNumber;
+    private FirebaseAuth auth;
     String studentNum, studentPassword;
     Button syncButton;
 
@@ -39,10 +44,11 @@ public class SettingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_setting,container,false);
+        view = inflater.inflate(R.layout.fragment_setting, container, false);
         context = container.getContext();
-
-        mWebView = (WebView)view.findViewById(R.id.webView);
+        auth = FirebaseAuth.getInstance();
+        logoutButton = (Button) view.findViewById(R.id.btn_logout);
+        mWebView = (WebView) view.findViewById(R.id.webView);
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setDomStorageEnabled(true);
@@ -75,10 +81,9 @@ public class SettingFragment extends Fragment {
                                 @Override
                                 public void onReceiveValue(String s) {
                                     Log.i("hello", s);
-                                    if(s.trim().equals("\"success\"")) {
+                                    if (s.trim().equals("\"success\"")) {
                                         Toast.makeText(context, "학수 정보를 성공적으로 불러왔습니다", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
+                                    } else {
                                         Toast.makeText(context, "학수 정보를 불러오지 못했습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -98,15 +103,23 @@ public class SettingFragment extends Fragment {
                 studentNum = etNumber.getText().toString();
                 studentPassword = etPassword.getText().toString();
 
-                if(studentNum.isEmpty())
+                if (studentNum.isEmpty())
                     Toast.makeText(context, "학번을 입력해주세요", Toast.LENGTH_SHORT).show();
-                else if(studentPassword.isEmpty())
+                else if (studentPassword.isEmpty())
                     Toast.makeText(context, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 else
                     mWebView.loadUrl("https://sugang.skku.edu/skku");
             }
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
+                    auth.signOut();
+            }
+        });
         return view;
     }
 

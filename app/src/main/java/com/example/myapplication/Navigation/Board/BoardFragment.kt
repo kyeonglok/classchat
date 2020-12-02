@@ -54,6 +54,7 @@ class BoardFragment : Fragment() {
                 classList.clear()
                 if(querySnapshot == null)return@addSnapshotListener
                 val userInfo = querySnapshot.toObject(userDTO::class.java!!)
+                if(userInfo == null)return@addSnapshotListener
                 val classesInfo = userInfo!!.classes
                 for (classKey in classesInfo.keys){
                     classList.add(ClassData(classKey,classesInfo.get(classKey)!!))

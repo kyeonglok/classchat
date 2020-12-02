@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.myapplication.Navigation.Board.BoardFragment;
 import com.example.myapplication.Navigation.ChatFragment;
 import com.example.myapplication.Navigation.HomeFragment;
+import com.example.myapplication.Navigation.MyPageFragment;
 import com.example.myapplication.Navigation.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         chatFragment = new ChatFragment();
         boardFragment = new BoardFragment();
-        settingFragment = new SettingFragment();
+        settingFragment = new MyPageFragment();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
