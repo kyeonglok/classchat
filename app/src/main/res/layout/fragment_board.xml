@@ -7,34 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_logo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/img_class_frag_logo"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/logo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="39dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="12dp"
-            android:background="@drawable/class_btn_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/img_class_frag_logo"
-            app:layout_constraintBottom_toBottomOf="@id/img_class_frag_logo"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_board_fragment"
+        android:theme="@style/AppTheme.AppBarOverlay" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_board_title"
         android:layout_width="0dp"
@@ -43,7 +19,7 @@
         android:background="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_logo">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
         <ImageView
             android:id="@+id/img_class_board"
             android:layout_width="wrap_content"
