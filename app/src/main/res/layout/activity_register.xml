@@ -21,19 +21,19 @@
         android:id="@+id/txtRegisterPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="비밀번호를 입력하세요 (8자 이상)"
         android:inputType="textPassword"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegisterEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRegisterNickname" />
 
     <EditText
         android:id="@+id/txtRegisterPasswordCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="비밀번호를 다시 입력해주세요"
         android:inputType="textPassword"
@@ -49,4 +49,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRegisterPasswordCheck" />
+
+    <EditText
+        android:id="@+id/txtRegisterNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="닉네임을 입력하세요"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegisterEmail" />
 </androidx.constraintlayout.widget.ConstraintLayout>
