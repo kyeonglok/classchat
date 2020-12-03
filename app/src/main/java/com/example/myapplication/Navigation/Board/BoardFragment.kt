@@ -52,8 +52,10 @@ class BoardFragment : Fragment() {
             var uid = FirebaseAuth.getInstance().currentUser?.uid
             classSnapshot = firestore?.collection("users")?.document(uid!!)?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 classList.clear()
+                Log.d("query",querySnapshot.toString())
                 if(querySnapshot == null)return@addSnapshotListener
                 val userInfo = querySnapshot.toObject(userDTO::class.java!!)
+                Log.d("userinfo",userInfo.toString())
                 if(userInfo == null)return@addSnapshotListener
                 val classesInfo = userInfo!!.classes
                 for (classKey in classesInfo.keys){

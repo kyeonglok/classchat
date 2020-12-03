@@ -71,7 +71,7 @@ class BoardWriteActivity : AppCompatActivity() {
         newBoard.boardClassName = className
 
         //게시물을 데이터를 생성 및 엑티비티 종료
-        firestore?.collection("images")?.document()?.set(newBoard)
+        firestore?.collection("boards")?.document()?.set(newBoard)
 
         finish()
     }

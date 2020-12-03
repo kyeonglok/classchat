@@ -3,6 +3,7 @@ package com.example.myapplication.Navigation.Board
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class BoardInsideActivity : AppCompatActivity() {
                         boardIdList.clear()
                         if(querySnapshot == null)return@addSnapshotListener
                         for (snapshot in querySnapshot?.documents!!) {
+                            Log.d("ids",snapshot.id)
                             boardIdList.add(snapshot.id)
                             boardDTOs.add(snapshot.toObject(boardDTO::class.java)!!)
                         }
@@ -96,7 +98,7 @@ class BoardInsideActivity : AppCompatActivity() {
             viewHolder.tv_title.text = boardDTOs[position].title
             viewHolder.tv_content.text = boardDTOs[position].explain
             viewHolder.tv_like_count.text = "좋아요 "+boardDTOs[position].favoriteCount.toString()
-            viewHolder.tv_nickname.text = boardDTOs[position].userId
+            viewHolder.tv_nickname.text = "익명"
 
             viewHolder.setOnClickListener {v->
                 var intent = Intent(v.context,BoardDetailActivity::class.java)

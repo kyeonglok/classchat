@@ -13,6 +13,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Navigation.GetClassActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".Navigation.Board.BoardInsideActivity"></activity>
+        <activity android:name=".Navigation.Board.BoardDetailActivity"></activity>
+        <activity android:name=".Navigation.Board.BoardWriteActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

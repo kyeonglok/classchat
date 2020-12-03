@@ -3,6 +3,7 @@ package com.example.myapplication.Navigation.Board
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,11 @@ import kotlinx.android.synthetic.main.item_board.view.*
 import kotlinx.android.synthetic.main.item_class.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.toolbar_board_detail.*
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlinx.android.synthetic.main.item_board.view.tv_content as tv_content1
 import kotlinx.android.synthetic.main.item_board.view.tv_nickname as tv_nickname1
+import kotlinx.android.synthetic.main.item_board.view.tv_time as tv_time1
 
 class BoardDetailActivity : AppCompatActivity() {
     var boardId : String? = null
@@ -30,9 +34,9 @@ class BoardDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_detail)
-        className = intent.getStringExtra("boardId")
-        boardId = intent.getStringExtra("className")
-        tv_detail_classname.text = boardId + " 게시판"
+        boardId = intent.getStringExtra("boardId")
+        className = intent.getStringExtra("className")
+        tv_detail_classname.text = className + " 게시판"
         rv_comment.adapter = CommentRecyclerViewAdapter()
         rv_comment.layoutManager = LinearLayoutManager(this)
         
@@ -69,17 +73,27 @@ class BoardDetailActivity : AppCompatActivity() {
         commentSnapshot?.remove()
     }
     fun bindContent(){
+        Log.d("boardId",boardId.toString())
         FirebaseFirestore.getInstance()
                 .collection("boards")
                 .document(boardId!!)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if(querySnapshot == null)return@addSnapshotListener
                     val content = querySnapshot.toObject(boardDTO::class.java)
-                    detailviewitem_profile_textview.text = content!!.userId
+                    detailviewitem_profile_textview.text = "익명"
                     tv_board_detail_title.text = content!!.title
                     detailviewitem_explain_textview.text = content!!.explain
                     tv_like_count.text = "좋아요 "+content!!.favoriteCount.toString()
                 }
+    }
+    private fun getDateTime(s: String): String? {
+        try {
+            val sdf = SimpleDateFormat("MM/dd hh:mm")
+            val netDate = Date(s.toLong())
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return e.toString()
+        }
     }
     inner class CommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var commentDTOs : MutableList<boardDTO.Comment> = mutableListOf<boardDTO.Comment>()
@@ -96,6 +110,8 @@ class BoardDetailActivity : AppCompatActivity() {
                         for (snapshot in querySnapshot?.documents!!) {
                             commentDTOs.add(snapshot.toObject(boardDTO.Comment::class.java)!!)
                         }
+                        commentDTOs.sortBy{it.timestamp}
+                        tv_comment_count.text = "댓글 "+ commentDTOs.size.toString()
                         notifyDataSetChanged()
 
                     }
@@ -122,8 +138,9 @@ class BoardDetailActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewHolder = (holder as CustomViewHolder).itemView
 
+            viewHolder.tv_time.text = getDateTime(commentDTOs[position].timestamp.toString())
             viewHolder.tv_content.text = commentDTOs[position].comment
-            viewHolder.tv_nickname.text = commentDTOs[position].userId
+            viewHolder.tv_nickname.text = "익명"
 
         }
 
