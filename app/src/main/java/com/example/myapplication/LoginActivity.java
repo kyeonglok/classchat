@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,7 @@ public class LoginActivity extends Activity {
     private EditText etPassword, etUsername;
     String passWord, userName;
     Button loginButton;
-    Button registerButton;
+    TextView registerButton;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -39,7 +40,7 @@ public class LoginActivity extends Activity {
         etUsername = (EditText) findViewById(R.id.txtLoginEmail);
         etPassword = (EditText) findViewById(R.id.txtLoginPassword);
         loginButton = findViewById(R.id.btnLogin);
-        registerButton = findViewById(R.id.btnRegister);
+        registerButton = findViewById(R.id.tv_register);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {

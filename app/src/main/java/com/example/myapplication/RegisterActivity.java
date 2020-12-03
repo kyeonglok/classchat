@@ -20,12 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etPassword, etUsername, etNickname, etPasswordCheck;
     String userName, nickName, passWord, passWordCheck;
-    Button registerButton;
+    Button registerButton, checkEmailButton, checkNicknameButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
@@ -37,11 +38,61 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        etUsername = (EditText) findViewById(R.id.txtRegisterEmail);
-        etNickname = (EditText) findViewById(R.id.txtRegisterNickname);
-        etPassword = (EditText) findViewById(R.id.txtRegisterPassword);
-        etPasswordCheck = (EditText) findViewById(R.id.txtRegisterPasswordCheck);
-        registerButton = findViewById(R.id.btnRegister2);
+        etUsername = (EditText) findViewById(R.id.et_email);
+        etNickname = (EditText) findViewById(R.id.et_nickname);
+        etPassword = (EditText) findViewById(R.id.et_pw);
+        etPasswordCheck = (EditText) findViewById(R.id.et_pwcheck);
+        registerButton = findViewById(R.id.btn_register);
+        checkEmailButton = findViewById(R.id.btn_check_email);
+        checkNicknameButton = findViewById(R.id.btn_check_nickname);
+
+        checkEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userName = etUsername.getText().toString();
+                firebaseFirestore.collection("users")
+                        .whereEqualTo("email", userName)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()) {
+                                    if(task.getResult().size() != 0)
+                                        Toast.makeText(RegisterActivity.this, "이미 존재하는 이메일입니다.", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(RegisterActivity.this, "사용할 수 있는 이메일입니다.", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(RegisterActivity.this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+        checkNicknameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nickName = etNickname.getText().toString();
+                firebaseFirestore.collection("users")
+                        .whereEqualTo("nickname", nickName)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()) {
+                                    if(task.getResult().size() != 0)
+                                        Toast.makeText(RegisterActivity.this, "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(RegisterActivity.this, "사용할 수 있는 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(RegisterActivity.this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
