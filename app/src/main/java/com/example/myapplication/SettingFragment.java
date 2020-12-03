@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 public class SettingFragment extends Fragment {
@@ -57,22 +58,17 @@ public class SettingFragment extends Fragment {
                                     "document.getElementsByName('Main')[0].contentWindow.document.getElementById('id').value='" + studentNum + "';" + // 학번 입력
                                     "document.getElementsByName('Main')[0].contentWindow.document.getElementById('pwd').value='" + studentPassword + "';" + // PASSWORD 입력
                                     "document.getElementsByName('Main')[0].contentWindow.document.getElementById('btn_login').click();" + // LOGIN 버튼 클릭
-
-                                    "if (document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0] === undefined)" +
-                                    "return 'failed';" +
-                                    "console.log(document.getElementsByName('Main')[0].contentWindow.document.getElementById('message'));" + // LOGIN 버튼 클릭
+                                    //"if (document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0] === undefined)" +
+                                    //"return 'failed';" +
+                                    "setTimeout(function() {" +
+                                    "console.log('helloworld');" +
                                     "document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('topFrame')[0].contentWindow.document.getElementsByTagName('li')[2].childNodes[0].click();" +
-                                    "var len = parent.parent.parent.document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('mainFrame')[0].contentWindow.document.getElementsByTagName('html')[0].childNodes[2].getElementsByTagName('table')[7].getElementsByTagName('tbody')[0].getElementsByTagName('tr').length;" +
-                                    "var i = 1;" +
-                                    "for (i = 1; i < len; i++) {" +
-                                    "console.log(parent.parent.parent.document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('mainFrame')[0].contentWindow.document.getElementsByTagName('html')[0].childNodes[2].getElementsByTagName('table')[7].getElementsByTagName('tbody')[0].getElementsByTagName('tr')[i].getElementsByTagName('td')[3].title);" +
-                                    "}" +
+                                    "}, 1000);" +
                                     "return 'success';" +
 
                                     "})();", new ValueCallback<String>() {
                                 @Override
                                 public void onReceiveValue(String s) {
-                                    Log.i("hello", s);
                                     if(s.trim().equals("\"success\"")) {
                                         Toast.makeText(context, "학수 정보를 성공적으로 불러왔습니다", Toast.LENGTH_SHORT).show();
                                     }
@@ -80,13 +76,40 @@ public class SettingFragment extends Fragment {
                                         Toast.makeText(context, "학수 정보를 불러오지 못했습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 }
+
                             });
                         }
                     }
-                }, 500);
+                }, 1000);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    public void run() {
+                        mWebView.evaluateJavascript("javascript:(function() {" +
+                                "console.log(parent.parent.parent.document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('mainFrame')[0].contentWindow.document.getElementsByTagName('html')[0].childNodes[2].getElementsByTagName('table'));" +
+                                "var len = parent.parent.parent.document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('mainFrame')[0].contentWindow.document.getElementsByTagName('html')[0].childNodes[2].getElementsByTagName('table')[7].getElementsByTagName('tbody')[0].getElementsByTagName('tr').length;" +
+                                "console.log(len);" +
+                                "var i = 1;" +
+                                "var str = '';" +
+                                "for (i = 1; i < len; i++) {" +
+                                "str.concat(parent.parent.parent.document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('mainFrame')[0].contentWindow.document.getElementsByTagName('html')[0].childNodes[2].getElementsByTagName('table')[7].getElementsByTagName('tbody')[0].getElementsByTagName('tr')[i].getElementsByTagName('td')[3].title);" +
+                                "console.log(parent.parent.parent.document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('mainFrame')[0].contentWindow.document.getElementsByTagName('html')[0].childNodes[2].getElementsByTagName('table')[7].getElementsByTagName('tbody')[0].getElementsByTagName('tr')[i].getElementsByTagName('td')[3].title);" +
+                                "}" +
+                                "return str;" +
+
+                                "})();", new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String s) {
+                                Log.i("hello", s);
+                            }
+
+                        });
+                    }
+                }, 4000);
             }
         });
-        mWebView.setVisibility(View.GONE);
+        // mWebView.setVisibility(View.GONE);
         etNumber = (EditText) view.findViewById(R.id.txtStudentNum);
         etPassword = (EditText) view.findViewById(R.id.txtStudentPassword);
         syncButton = view.findViewById(R.id.btnSync);
