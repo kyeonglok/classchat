@@ -61,7 +61,7 @@ public class GetClassActivity extends AppCompatActivity {
             }
             @Override
             public void onPageFinished(WebView view, String url) {
-                if(!isRedirected) {
+                if(url.equals("https://icampus.skku.edu/xn-sso/login.php?auto_login=true&sso_only=true&cvs_lgn=&return_url=https%3A%2F%2Ficampus.skku.edu%2Fxn-sso%2Fgw-cb.php%3Ffrom%3Dweb_redirect%26login_type%3Dstandalone%26return_url%3Dhttps%253A%252F%252Ficampus.skku.edu%252Flogin%252Fcallback")) {
                     Handler delayHandler = new Handler();
                     delayHandler.postDelayed(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -93,7 +93,7 @@ public class GetClassActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }, 5000);
+                    }, 10000);
 
                     delayHandler.postDelayed(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -137,7 +137,7 @@ public class GetClassActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }, 10000);
+                    }, 20000);
                 }
             }
         });
@@ -157,7 +157,7 @@ public class GetClassActivity extends AppCompatActivity {
                 else if(studentPassword.isEmpty())
                     Toast.makeText(GetClassActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 else
-                    mWebView.loadUrl("https://icampus.skku.edu/xn-sso/login.php?auto_login=true&sso_only=true&cvs_lgn=&return_url=https%3A%2F%2Ficampus.skku.edu%2Fxn-sso%2Fgw-cb.php%3Ffrom%3Dweb_redirect%26login_type%3Dstandalone%26return_url%3Dhttps%253A%252F%252Ficampus.skku.edu%252Flogin%252Fcallback");
+                    mWebView.loadUrl("https://icampus.skku.edu/login");
             }
         });
     }
