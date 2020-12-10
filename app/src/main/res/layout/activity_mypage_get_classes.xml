@@ -47,30 +47,29 @@
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/tv_emailcertificate"
-        app:layout_constraintTop_toBottomOf="@id/tv_emailcertificateinfo"
         android:layout_marginTop="16dp"
+        android:text="통합 아이디"
+        android:textColor="#262626"
         android:textSize="15sp"
         android:textStyle="normal"
-        android:textColor="#262626"
-        android:text="학번"
-        />
+        app:layout_constraintLeft_toLeftOf="@id/tv_emailcertificate"
+        app:layout_constraintTop_toBottomOf="@id/tv_emailcertificateinfo" />
 
     <EditText
         android:id="@+id/et_email"
-        android:hint="ex) 2015123456"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:background="@drawable/mailcheck_btn_writingbox"
+        android:gravity="center_vertical"
+        android:hint="ex) chanokim"
+        android:lines="1"
         android:paddingLeft="11dp"
         android:paddingTop="9dp"
         android:paddingBottom="9dp"
-        android:background="@drawable/mailcheck_btn_writingbox"
+        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="@id/tv_emailcertificate"
         app:layout_constraintRight_toLeftOf="@id/btn_request"
-        app:layout_constraintTop_toBottomOf="@id/tv_email"
-        android:layout_width="0dp"
-        android:textSize="15sp"
-        android:lines="1"
-        android:layout_height="36dp"
-        android:gravity="center_vertical"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
     <Button
         android:text=""
@@ -134,16 +133,18 @@
 
     <WebView
         android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="211dp"
+        android:layout_height="197dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
+        android:layout_marginTop="68dp"
         android:visibility="gone"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="113dp" />
 
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_code" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

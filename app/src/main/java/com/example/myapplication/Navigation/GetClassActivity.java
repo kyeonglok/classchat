@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Model.userDTO;
@@ -48,62 +49,96 @@ public class GetClassActivity extends AppCompatActivity {
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setSupportMultipleWindows(true);
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.setWebViewClient(new WebViewClient() {
+            private boolean isRedirected;
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                isRedirected = true;
+                return true;
+            }
             @Override
             public void onPageFinished(WebView view, String url) {
-                /*
-                Handler delayHandler = new Handler();
-                delayHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if(!isRedirected) {
+                    Handler delayHandler = new Handler();
+                    delayHandler.postDelayed(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void run() {
                             mWebView.evaluateJavascript("javascript:(function() {" +
-                                    "document.getElementsByName('Main')[0].contentWindow.document.getElementById('id').value='" + studentNum + "';" + // 학번 입력
-                                    "document.getElementsByName('Main')[0].contentWindow.document.getElementById('pwd').value='" + studentPassword + "';" + // PASSWORD 입력
-                                    "document.getElementsByName('Main')[0].contentWindow.document.getElementById('btn_login').click();" + // LOGIN 버튼 클릭
-                                    //"if (document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0] === undefined)" +
-                                    //"return 'failed';" +
-                                    "setTimeout(function() {" +
-                                    "console.log('helloworld');" +
-                                    "document.getElementsByName('Main')[0].contentWindow.document.getElementsByName('contentFrame')[0].contentWindow.document.getElementsByName('topFrame')[0].contentWindow.document.getElementsByTagName('li')[2].childNodes[0].click();" +
-                                    "}, 1000);" +
-                                    "return 'success';" +
-
+                                    "document.querySelector(\"#userid\").value='" + studentNum + "';" +
+                                    "document.querySelector(\"#password\").value='" + studentPassword + "';" +
+                                    "document.querySelector(\"#btnLoginBtn\").click();" +
                                     "})();", new ValueCallback<String>() {
                                 @Override
-                                public void onReceiveValue(String s) {
-                                    if (s.trim().equals("\"success\"")) {
-                                        Toast.makeText(GetClassActivity.this, "학수 정보를 성공적으로 불러왔습니다", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(GetClassActivity.this, "학수 정보를 불러오지 못했습니다", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
+                                public void onReceiveValue(String value) {
 
+                                }
                             });
                         }
-                    }
-                }, 500);
-                */
+                    }, 2000);
 
-                HashMap<String, String> classes = new HashMap<>();
-                classes.put("ICE3037-43", "종합설계프로젝트");
-                String uid = firebaseAuth.getCurrentUser().getUid();
-                firebaseFirestore.collection("users").document(uid)
-                        .update("classes", classes)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                finish();
-                                Toast.makeText(GetClassActivity.this, "연동에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(GetClassActivity.this, "연동에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    delayHandler.postDelayed(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void run() {
+                            mWebView.evaluateJavascript("javascript:(function() {" +
+                                    "location.replace('https://canvas.skku.edu');" +
+                                    "})();", new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String value) {
+
+                                }
+                            });
+                        }
+                    }, 5000);
+
+                    delayHandler.postDelayed(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void run() {
+                            mWebView.evaluateJavascript("javascript:(function() {" +
+                                    "var n = document.querySelector(\"#DashboardCard_Container > div\").childElementCount;" +
+                                    "var cls = '';" +
+                                    "for (var i = 1; i <= n; i++) {" +
+                                    "if (document.querySelector(\"#DashboardCard_Container > div > div:nth-child(\" + i + \") > div > a > div > div.ic-DashboardCard__header-term.ellipsis\").title == '2020년 2학기')" +
+                                    "cls = cls.concat(document.querySelector(\"#DashboardCard_Container > div > div:nth-child(\" + i + \") > div > a > div > div.ic-DashboardCard__header-subtitle.ellipsis\").title, '/');" +
+                                    "}" +
+                                    "return cls;" +
+                                    "})();", new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String value) {
+                                    Log.i("hello", value);
+                                    HashMap<String, String> classes = new HashMap<>();
+                                    String[] result = value.replace("\"", "").split("/");
+                                    for (int i = 0; i < result.length; i++) {
+                                        int idx = result[i].indexOf('_');
+                                        classes.put(result[i].substring(idx + 1, result[i].lastIndexOf('(')), result[i].substring(0, idx));
+                                    }
+                                    String uid = firebaseAuth.getCurrentUser().getUid();
+                                    firebaseFirestore.collection("users").document(uid)
+                                            .update("classes", classes)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    finish();
+                                                    Toast.makeText(GetClassActivity.this, "연동에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(GetClassActivity.this, "연동에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                }
+                            });
+                        }
+                    }, 10000);
+                }
             }
         });
 
@@ -122,7 +157,7 @@ public class GetClassActivity extends AppCompatActivity {
                 else if(studentPassword.isEmpty())
                     Toast.makeText(GetClassActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 else
-                    mWebView.loadUrl("https://sugang.skku.edu/skku");
+                    mWebView.loadUrl("https://icampus.skku.edu/xn-sso/login.php?auto_login=true&sso_only=true&cvs_lgn=&return_url=https%3A%2F%2Ficampus.skku.edu%2Fxn-sso%2Fgw-cb.php%3Ffrom%3Dweb_redirect%26login_type%3Dstandalone%26return_url%3Dhttps%253A%252F%252Ficampus.skku.edu%252Flogin%252Fcallback");
             }
         });
     }
