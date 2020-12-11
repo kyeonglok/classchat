@@ -36,13 +36,12 @@ public class GetClassActivity extends AppCompatActivity {
 
     private EditText etPassword, etNumber;
     String studentNum, studentPassword;
-    Button syncButton;
+    Button syncButton, backButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage_get_classes);
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -174,6 +173,14 @@ public class GetClassActivity extends AppCompatActivity {
         etNumber = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_code);
         syncButton = findViewById(R.id.btn_ok);
+        backButton = findViewById(R.id.btn_back);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         syncButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {

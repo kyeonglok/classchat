@@ -22,6 +22,7 @@ public class LoginActivity extends Activity {
     String passWord, userName;
     Button loginButton;
     TextView registerButton;
+    TextView resetPwdButton;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -41,6 +42,7 @@ public class LoginActivity extends Activity {
         etPassword = (EditText) findViewById(R.id.txtLoginPassword);
         loginButton = findViewById(R.id.btnLogin);
         registerButton = findViewById(R.id.tv_register);
+        resetPwdButton = findViewById(R.id.tv_find_id_pw);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -59,6 +61,13 @@ public class LoginActivity extends Activity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+        resetPwdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ResetPwdActivity.class);
                 startActivity(intent);
             }
         });

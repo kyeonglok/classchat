@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText etPassword, etUsername, etNickname, etPasswordCheck;
     String userName, nickName, passWord, passWordCheck;
-    Button registerButton, checkEmailButton, checkNicknameButton;
+    Button registerButton, checkEmailButton, checkNicknameButton, backButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
@@ -45,6 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.btn_register);
         checkEmailButton = findViewById(R.id.btn_check_email);
         checkNicknameButton = findViewById(R.id.btn_check_nickname);
+        backButton = findViewById(R.id.btn_back);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         checkEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerUser(String userName, String passWord) {
-        Log.i("name ", userName);
-        Log.i("password ", passWord);
         firebaseAuth.createUserWithEmailAndPassword(userName, passWord)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
