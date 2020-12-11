@@ -41,6 +41,8 @@ public class GetClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage_get_classes);
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -52,17 +54,39 @@ public class GetClassActivity extends AppCompatActivity {
         mWebSettings.setSupportMultipleWindows(true);
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.setWebViewClient(new WebViewClient() {
-            private boolean isRedirected;
+            Handler delayHandler = new Handler();
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
-                isRedirected = true;
                 return true;
             }
             @Override
             public void onPageFinished(WebView view, String url) {
-                if(url.equals("https://icampus.skku.edu/xn-sso/login.php?auto_login=true&sso_only=true&cvs_lgn=&return_url=https%3A%2F%2Ficampus.skku.edu%2Fxn-sso%2Fgw-cb.php%3Ffrom%3Dweb_redirect%26login_type%3Dstandalone%26return_url%3Dhttps%253A%252F%252Ficampus.skku.edu%252Flogin%252Fcallback")) {
-                    Handler delayHandler = new Handler();
+                if(url.equals("https://icampus.skku.edu/login")) {
+                    delayHandler.postDelayed(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void run() {
+                            mWebView.evaluateJavascript("javascript:(function() {" +
+                                    "console.log(location.href);" +
+                                    "if(location.href.includes('https://icampus.skku.edu/xn-sso/login.php'))" +
+                                    "return 'failed';" +
+                                    "})();", new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String value) {
+                                    if(value.equals("\"failed\"")) {
+                                        Log.i("classchat", "Failed to login");
+                                        Toast.makeText(GetClassActivity.this, "연동에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        delayHandler.removeCallbacksAndMessages(null);
+                                        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                        }
+                    }, 3000);
+                }
+                else if(url.equals("https://icampus.skku.edu/xn-sso/login.php?auto_login=true&sso_only=true&cvs_lgn=&return_url=https%3A%2F%2Ficampus.skku.edu%2Fxn-sso%2Fgw-cb.php%3Ffrom%3Dweb_redirect%26login_type%3Dstandalone%26return_url%3Dhttps%253A%252F%252Ficampus.skku.edu%252Flogin%252Fcallback")) {
                     delayHandler.postDelayed(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
@@ -78,8 +102,9 @@ public class GetClassActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }, 2000);
-
+                    }, 500);
+                }
+                else if(url.equals("https://icampus.skku.edu/")) {
                     delayHandler.postDelayed(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
@@ -93,8 +118,9 @@ public class GetClassActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }, 10000);
-
+                    }, 500);
+                }
+                else if(url.equals("https://canvas.skku.edu/")) {
                     delayHandler.postDelayed(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
@@ -110,7 +136,7 @@ public class GetClassActivity extends AppCompatActivity {
                                     "})();", new ValueCallback<String>() {
                                 @Override
                                 public void onReceiveValue(String value) {
-                                    Log.i("hello", value);
+                                    Log.i("classchat", value);
                                     HashMap<String, String> classes = new HashMap<>();
                                     String[] result = value.replace("\"", "").split("/");
                                     for (int i = 0; i < result.length; i++) {
@@ -133,16 +159,18 @@ public class GetClassActivity extends AppCompatActivity {
                                                     Toast.makeText(GetClassActivity.this, "연동에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
+                                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
                                 }
                             });
                         }
-                    }, 20000);
+                    }, 500);
                 }
             }
         });
 
         mWebView.setVisibility(View.GONE);
+        mWebView.clearCache(true);
         etNumber = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_code);
         syncButton = findViewById(R.id.btn_ok);
@@ -156,8 +184,10 @@ public class GetClassActivity extends AppCompatActivity {
                     Toast.makeText(GetClassActivity.this, "학번을 입력해주세요", Toast.LENGTH_SHORT).show();
                 else if(studentPassword.isEmpty())
                     Toast.makeText(GetClassActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
-                else
+                else {
+                    findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                     mWebView.loadUrl("https://icampus.skku.edu/login");
+                }
             }
         });
     }
