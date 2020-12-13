@@ -1,16 +1,14 @@
-package com.example.myapplication.Navigation.Board
+package com.example.myapplication.navigation.board
 
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.Model.userDTO
 import com.example.myapplication.MyGlobals
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth

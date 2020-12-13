@@ -13,11 +13,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ResetPwdActivity"></activity>
-        <activity android:name=".Navigation.GetClassActivity"></activity>
+        <activity android:name=".navigation.GetClassActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".Navigation.Board.BoardInsideActivity"></activity>
-        <activity android:name=".Navigation.Board.BoardDetailActivity"></activity>
-        <activity android:name=".Navigation.Board.BoardWriteActivity"></activity>
+        <activity android:name=".navigation.board.BoardInsideActivity"></activity>
+        <activity android:name=".navigation.board.BoardDetailActivity"></activity>
+        <activity android:name=".navigation.board.BoardWriteActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent"/>
     </application>
 
 </manifest>

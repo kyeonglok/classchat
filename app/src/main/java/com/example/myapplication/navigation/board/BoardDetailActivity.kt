@@ -1,6 +1,5 @@
-package com.example.myapplication.Navigation.Board
+package com.example.myapplication.navigation.board
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,34 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.Model.boardDTO
+import com.example.myapplication.model.boardDTO
 import com.example.myapplication.R
+import com.example.myapplication.model.AlarmDTO
+import com.example.myapplication.utils.FcmPush
+import com.example.myapplication.utils.dateUtils
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_board_detail.*
-import kotlinx.android.synthetic.main.activity_board_detail.view.*
-import kotlinx.android.synthetic.main.activity_board_write.*
-import kotlinx.android.synthetic.main.item_board.view.*
-import kotlinx.android.synthetic.main.item_class.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.toolbar_board_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlinx.android.synthetic.main.item_board.view.tv_content as tv_content1
-import kotlinx.android.synthetic.main.item_board.view.tv_nickname as tv_nickname1
-import kotlinx.android.synthetic.main.item_board.view.tv_time as tv_time1
 
 class BoardDetailActivity : AppCompatActivity() {
     var boardId : String? = null
     var className : String? = null
     var commentSnapshot : ListenerRegistration? = null
     var firestore : FirebaseFirestore? = null
-
+    var destinationUid : String? = null
+    var user : FirebaseUser?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_detail)
         firestore = FirebaseFirestore.getInstance()
+        user = FirebaseAuth.getInstance().currentUser
         boardId = intent.getStringExtra("boardId")
         className = intent.getStringExtra("className")
         tv_detail_classname.text = className + " 게시판"
@@ -63,24 +61,51 @@ class BoardDetailActivity : AppCompatActivity() {
                     .collection("comments")
                     .document()
                     .set(comment)
-            //commentAlarm(destinationUid!!, comment_edit_message.text.toString())
+            commentAlarm(destinationUid!!, comment_edit_message.text.toString())
             comment_edit_message.setText("")
 
         }
         
     }
+    fun commentAlarm(destinationUid: String, message: String) {
 
+        val alarmDTO = AlarmDTO()
+        alarmDTO.destinationUid = destinationUid
+        alarmDTO.userId = user?.email
+        alarmDTO.uid = user?.uid
+        alarmDTO.kind = 1
+        alarmDTO.message = message
+        alarmDTO.timestamp = System.currentTimeMillis()
+
+        FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
+
+        var message = "누군가 당신의 글에 댓글을 남겼습니다 : $message"
+        FcmPush.instance?.sendMessage(destinationUid, "알림 메세지 입니다.", message)
+    }
+    fun favoriteAlarm(destinationUid: String) {
+
+        val alarmDTO = AlarmDTO()
+        alarmDTO.destinationUid = destinationUid
+        alarmDTO.userId = user?.email
+        alarmDTO.uid = user?.uid
+        alarmDTO.kind = 0
+        alarmDTO.timestamp = System.currentTimeMillis()
+
+        FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
+        var message = "누군가 당신의 글에 좋아요를 눌렀습니다."
+        FcmPush.instance?.sendMessage(destinationUid, "알림 메세지 입니다.", message)
+    }
     override fun onStop() {
         super.onStop()
         commentSnapshot?.remove()
     }
     private fun bindContent(){
-        Log.d("boardId",boardId.toString())
         firestore?.
                 collection("boards")?.document(boardId!!)
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if(querySnapshot == null)return@addSnapshotListener
                     val content = querySnapshot.toObject(boardDTO::class.java)
+                    destinationUid = content?.uid
                     detailviewitem_profile_textview.text = "익명"
                     tv_board_detail_title.text = content!!.title
                     detailviewitem_explain_textview.text = content!!.explain
@@ -90,7 +115,6 @@ class BoardDetailActivity : AppCompatActivity() {
                     } else {
                         btn_heart.setBackgroundResource(R.drawable.class_board_detail_ic_heart_unactivated)
                     }
-                    Log.i("bind","done bind")
                     tv_like_count.text = "좋아요 "+content!!.favoriteCount.toString()
                 }
     }
@@ -103,27 +127,16 @@ class BoardDetailActivity : AppCompatActivity() {
             Log.i("favoriteEvenet",contentDTO.toString())
             if (contentDTO!!.favorites.containsKey(uid)) {
                 // Unstar the post and remove self from stars
-                Log.i("unstar","unstar")
                 contentDTO?.favoriteCount = contentDTO?.favoriteCount!! - 1
                 contentDTO?.favorites.remove(uid)
             } else {
                 // Star the post and add self to stars
                 contentDTO?.favoriteCount = contentDTO?.favoriteCount!! + 1
                 contentDTO?.favorites[uid] = true
-                Log.i("star","star")
-                //favoriteAlarm(contentDTOs[position].uid!!)
+                favoriteAlarm(contentDTO.uid!!)
             }
             transaction.set(tsDoc, contentDTO)
             bindContent()
-        }
-    }
-    private fun getDateTime(s: String): String? {
-        try {
-            val sdf = SimpleDateFormat("MM/dd hh:mm")
-            val netDate = Date(s.toLong())
-            return sdf.format(netDate)
-        } catch (e: Exception) {
-            return e.toString()
         }
     }
     inner class CommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -161,7 +174,7 @@ class BoardDetailActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewHolder = (holder as CustomViewHolder).itemView
 
-            viewHolder.tv_time.text = getDateTime(commentDTOs[position].timestamp.toString())
+            viewHolder.tv_time.text = dateUtils.parseTime(commentDTOs[position].timestamp)
             viewHolder.tv_content.text = commentDTOs[position].comment
             viewHolder.tv_nickname.text = "익명"
 

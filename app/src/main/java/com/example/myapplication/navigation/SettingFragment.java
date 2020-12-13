@@ -1,4 +1,4 @@
-package com.example.myapplication.Navigation;
+package com.example.myapplication.navigation;
 
 import android.content.Context;
 import android.content.Intent;

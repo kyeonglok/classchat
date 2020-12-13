@@ -3,7 +3,7 @@ package com.example.myapplication;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.myapplication.Model.userDTO;
+import com.example.myapplication.model.userDTO;
 
 public class MyGlobals {
     private String myNickname;

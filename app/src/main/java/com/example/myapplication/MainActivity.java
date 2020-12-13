@@ -7,14 +7,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.myapplication.Navigation.Board.BoardFragment;
-import com.example.myapplication.Navigation.ChatFragment;
-import com.example.myapplication.Navigation.HomeFragment;
-import com.example.myapplication.Navigation.MyPageFragment;
-import com.example.myapplication.Navigation.SettingFragment;
+import com.example.myapplication.navigation.board.BoardFragment;
+import com.example.myapplication.navigation.ChatFragment;
+import com.example.myapplication.navigation.HomeFragment;
+import com.example.myapplication.navigation.MyPageFragment;
+import com.example.myapplication.utils.FcmPush;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
+
+import kotlin.jvm.internal.markers.KMutableMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +72,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setFragment(0);
+        registerPushToken();
+    }
 
+
+    private void registerPushToken(){
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                String token = task.getResult().getToken();
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                HashMap<String,String> map = new HashMap<String,String>();
+                map.put("pushToken",token);
+
+                FirebaseFirestore.getInstance().collection("pushtokens").document(uid).set(map);
+            }
+        });
     }
     private void setFragment(int n){
         fm = getSupportFragmentManager();

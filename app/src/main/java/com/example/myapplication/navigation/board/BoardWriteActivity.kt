@@ -1,20 +1,15 @@
-package com.example.myapplication.Navigation.Board
+package com.example.myapplication.navigation.board
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import com.example.myapplication.Model.boardDTO
+import com.example.myapplication.model.boardDTO
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_board_write.*
-import kotlinx.android.synthetic.main.activity_board_write.view.*
 import kotlinx.android.synthetic.main.toolbar_board_write.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class BoardWriteActivity : AppCompatActivity() {
     var className : String?= null

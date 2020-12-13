@@ -1,4 +1,4 @@
-package com.example.myapplication.Navigation.Board
+package com.example.myapplication.navigation.board
 
 data class ClassData(
     val classId: String,

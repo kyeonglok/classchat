@@ -1,6 +1,5 @@
-package com.example.myapplication.Navigation;
+package com.example.myapplication.navigation;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,10 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.Model.userDTO;
 import com.example.myapplication.MyGlobals;
 import com.example.myapplication.R;
-import com.example.myapplication.RegisterActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

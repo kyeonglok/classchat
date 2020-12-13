@@ -1,4 +1,4 @@
-package com.example.myapplication.Navigation;
+package com.example.myapplication.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.example.myapplication.Navigation.Board
+package com.example.myapplication.navigation.board
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.Model.boardDTO
+import com.example.myapplication.model.boardDTO
 import com.example.myapplication.R
+import com.example.myapplication.utils.dateUtils
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_board_inside.*
@@ -69,6 +70,7 @@ class BoardInsideActivity : AppCompatActivity() {
             return e.toString()
         }
     }
+
     inner class BoardInsideRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var boardDTOs : MutableList<boardDTO> = mutableListOf<boardDTO>()
         var boardIdList : MutableList<String> = mutableListOf<String>()
@@ -109,7 +111,7 @@ class BoardInsideActivity : AppCompatActivity() {
             viewHolder.tv_content.text = boardDTOs[position].explain
             viewHolder.tv_like_count.text = "좋아요 "+boardDTOs[position].favoriteCount.toString()
             viewHolder.tv_nickname.text = "익명"
-            viewHolder.tv_time.text = (position+1).toString() + "분 전"
+            viewHolder.tv_time.text = dateUtils.parseTime(boardDTOs[position].timestamp)
             viewHolder.tv_comment_count.text = "댓글 " + boardDTOs[position].commentCount.toString()
 
             viewHolder.setOnClickListener {v->
