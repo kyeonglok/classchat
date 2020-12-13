@@ -91,6 +91,14 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String uid = firebaseAuth.getCurrentUser().getUid();
+                            FirebaseFirestore.getInstance().collection("users").document(uid).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            MyGlobals.getInstance().setMyInfo(documentSnapshot.toObject(userDTO.class));
+                                        }
+                                    });
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
 
