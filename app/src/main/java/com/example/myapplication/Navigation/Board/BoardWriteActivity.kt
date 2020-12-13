@@ -63,7 +63,7 @@ class BoardWriteActivity : AppCompatActivity() {
         //유저의 아이디
         newBoard.userId = auth?.currentUser?.email
         //게시물 업로드 시간
-        newBoard.timestamp = System.currentTimeMillis()
+        newBoard.timestamp = System.currentTimeMillis() * -1
         //게시물 제목
         newBoard.title = tv_title.text.toString()
 

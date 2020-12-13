@@ -12,6 +12,7 @@ data class boardDTO(
         var boardClassId: String? = null,
         var boardClassName: String? = null,
         var timestamp: Long? = null,
+        var commentCount: Int = 0,
         var favoriteCount: Int = 0,
         var favorites: MutableMap<String, Boolean> = HashMap()) {
 

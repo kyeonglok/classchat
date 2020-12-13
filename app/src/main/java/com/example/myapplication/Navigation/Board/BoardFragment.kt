@@ -1,6 +1,7 @@
 package com.example.myapplication.Navigation.Board
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Model.userDTO
+import com.example.myapplication.MyGlobals
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.android.synthetic.main.fragment_board.*
 import kotlinx.android.synthetic.main.fragment_board.view.*
 import kotlinx.android.synthetic.main.item_class.view.*
 
@@ -31,14 +34,17 @@ class BoardFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_board, container, false)
         classSnapshot = null
-        classListAdapter = ClassListRecyclerViewAdapter()
-        view.boardFragment_recyclerview.adapter = classListAdapter
-        view.boardFragment_recyclerview.layoutManager = LinearLayoutManager(activity)
         user = FirebaseAuth.getInstance().currentUser
         firestore = FirebaseFirestore.getInstance()
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        classListAdapter = ClassListRecyclerViewAdapter()
+        view.boardFragment_recyclerview.adapter = classListAdapter
+        view.boardFragment_recyclerview.layoutManager = LinearLayoutManager(activity)
+    }
     override fun onStop() {
         super.onStop()
         classSnapshot?.remove()
@@ -48,8 +54,24 @@ class BoardFragment : Fragment() {
         var classList : MutableList<ClassData> = mutableListOf<ClassData>()
 
         init{
-            //need to be get from userData
+            val classes = MyGlobals.getInstance().myClasses
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                classes.forEach{
+                    k,v -> classList.add(ClassData(k,v))
+                }
+            }
+            if(classList.size == 0){
+                boardFragment_recyclerview.visibility = View.GONE
+                tv_no_class.visibility = View.VISIBLE
+            }
+            else{
+                boardFragment_recyclerview.visibility = View.VISIBLE
+                tv_no_class.visibility = View.GONE
+            }
+            """
             var uid = FirebaseAuth.getInstance().currentUser?.uid
+            Log.d("test ", uid.toString())
+            
             classSnapshot = firestore?.collection("users")?.document(uid!!)?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 classList.clear()
                 Log.d("query",querySnapshot.toString())
@@ -61,8 +83,17 @@ class BoardFragment : Fragment() {
                 for (classKey in classesInfo.keys){
                     classList.add(ClassData(classKey,classesInfo.get(classKey)!!))
                 }
-                notifyDataSetChanged()
+                if(classList.size == 0){
+                    boardFragment_recyclerview.visibility = View.GONE
+                    tv_no_class.visibility = View.VISIBLE
+                }
+                else{
+                    boardFragment_recyclerview.visibility = View.VISIBLE
+                    tv_no_class.visibility = View.GONE
+                }
+                
             }
+            """
 
 """
             classList.add(ClassData("GED-1234", "종합설계프로젝트"))

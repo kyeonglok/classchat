@@ -16,12 +16,16 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_board_inside.*
 import kotlinx.android.synthetic.main.item_board.view.*
 import kotlinx.android.synthetic.main.toolbar_board_inside.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BoardInsideActivity : AppCompatActivity() {
     var mainView: View? = null
     var className: String? = null
     var classId: String?= null
     var boardSnapshot: ListenerRegistration? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_inside)
@@ -45,13 +49,25 @@ class BoardInsideActivity : AppCompatActivity() {
             v.context.startActivity(intent)
         }
 
-        rv_board_inside.adapter = BoardInsideRecyclerViewAdapter()
         rv_board_inside.layoutManager = LinearLayoutManager(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        rv_board_inside.adapter = BoardInsideRecyclerViewAdapter()
+    }
     override fun onStop() {
         super.onStop()
         boardSnapshot?.remove()
+    }
+    private fun getDateTime(s: String): String? {
+        try {
+            val sdf = SimpleDateFormat("MM/dd hh:mm")
+            val netDate = Date(s.toLong())
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return e.toString()
+        }
     }
     inner class BoardInsideRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var boardDTOs : MutableList<boardDTO> = mutableListOf<boardDTO>()
@@ -59,6 +75,7 @@ class BoardInsideActivity : AppCompatActivity() {
         init{
             boardSnapshot = FirebaseFirestore.getInstance()
                     .collection("boards")
+                    .orderBy("timestamp")
                     .whereEqualTo("boardClassId", classId)
                     .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                         boardDTOs.clear()
@@ -69,18 +86,8 @@ class BoardInsideActivity : AppCompatActivity() {
                             boardIdList.add(snapshot.id)
                             boardDTOs.add(snapshot.toObject(boardDTO::class.java)!!)
                         }
-                        boardDTOs.sortByDescending { it.timestamp }
                         notifyDataSetChanged()
                     }
-
-"""
-            var tmpBoardDTO : boardDTO = boardDTO("교양있는 현대인의 첫걸음","랄투부 구독",null,"greenday","익명",null,2400)
-            boardDTOs.add(tmpBoardDTO)
-            contentUidList.add("!#FJADKFJAHFKDHF!fd")
-            boardDTOs.add(tmpBoardDTO)
-            contentUidList.add("!#FJADKFJAHFKDHF!fd")
-            boardDTOs.add(tmpBoardDTO)
-            """
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -92,6 +99,9 @@ class BoardInsideActivity : AppCompatActivity() {
             return boardDTOs.size
         }
 
+
+
+
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewHolder = (holder as CustomViewHolder).itemView
 
@@ -99,6 +109,8 @@ class BoardInsideActivity : AppCompatActivity() {
             viewHolder.tv_content.text = boardDTOs[position].explain
             viewHolder.tv_like_count.text = "좋아요 "+boardDTOs[position].favoriteCount.toString()
             viewHolder.tv_nickname.text = "익명"
+            viewHolder.tv_time.text = (position+1).toString() + "분 전"
+            viewHolder.tv_comment_count.text = "댓글 " + boardDTOs[position].commentCount.toString()
 
             viewHolder.setOnClickListener {v->
                 var intent = Intent(v.context,BoardDetailActivity::class.java)
