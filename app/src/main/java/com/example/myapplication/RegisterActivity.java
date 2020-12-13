@@ -25,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerButton, checkEmailButton, checkNicknameButton, backButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
+    private String checkedEmail = null, checkedNickname = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(task.isSuccessful()) {
                                     if(task.getResult().size() != 0)
                                         Toast.makeText(RegisterActivity.this, "이미 존재하는 이메일입니다.", Toast.LENGTH_SHORT).show();
-                                    else
+                                    else {
                                         Toast.makeText(RegisterActivity.this, "사용할 수 있는 이메일입니다.", Toast.LENGTH_SHORT).show();
+                                        checkedEmail = userName;
+                                    }
                                 }
                                 else {
                                     Toast.makeText(RegisterActivity.this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -87,8 +90,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(task.isSuccessful()) {
                                     if(task.getResult().size() != 0)
                                         Toast.makeText(RegisterActivity.this, "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT).show();
-                                    else
+                                    else {
                                         Toast.makeText(RegisterActivity.this, "사용할 수 있는 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                                        checkedNickname = nickName;
+                                    }
                                 }
                                 else {
                                     Toast.makeText(RegisterActivity.this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -113,8 +118,18 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 else if(!passWord.equals(passWordCheck))
                     Toast.makeText(RegisterActivity.this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
-                else
-                    registerUser(userName, passWord);
+                else {
+                    if(checkedEmail == null || !checkedEmail.equals(userName)) {
+                        Toast.makeText(RegisterActivity.this, "이메일 중복 확인을 해주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else if(checkedNickname == null || !checkedNickname.equals(nickName)) {
+                        Toast.makeText(RegisterActivity.this, "닉네임 중복 확인을 해주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else
+                        registerUser(userName, passWord);
+                }
             }
         });
 

@@ -12,12 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ResetPwdActivity"></activity>
-        <activity android:name=".navigation.GetClassActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".navigation.board.BoardInsideActivity"></activity>
-        <activity android:name=".navigation.board.BoardDetailActivity"></activity>
-        <activity android:name=".navigation.board.BoardWriteActivity"></activity>
+        <activity android:name=".navigation.ChangePwdActivity"/>
+        <activity android:name=".navigation.ChangeNicknameActivity" />
+        <activity android:name=".ResetPwdActivity"/>
+        <activity android:name=".navigation.GetClassActivity"/>
+        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".navigation.board.BoardInsideActivity"/>
+        <activity android:name=".navigation.board.BoardDetailActivity"/>
+        <activity android:name=".navigation.board.BoardWriteActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
