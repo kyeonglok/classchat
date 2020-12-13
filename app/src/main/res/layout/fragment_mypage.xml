@@ -48,9 +48,8 @@
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="김찬호"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/my_profile_picture" />
@@ -60,14 +59,13 @@
                 android:id="@+id/tv_schoolmajor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="소프트웨어학과"
-                android:textColor="#676767"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="12dp"
+                android:textColor="#676767"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

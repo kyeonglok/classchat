@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.LoginActivity
+import com.example.myapplication.Model.userDTO
+import com.example.myapplication.MyGlobals
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_mypage.*
 import kotlinx.android.synthetic.main.fragment_mypage.view.*
 
 class MyPageFragment : Fragment() {
-
     var auth : FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,7 @@ class MyPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tv_nickname.setText(MyGlobals.getInstance().getMyNickname())
         btn_get_classes.setOnClickListener {
             val intent = Intent(context,GetClassActivity::class.java)
             context?.startActivity(intent)

@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Model.userDTO;
+import com.example.myapplication.MyGlobals;
 import com.example.myapplication.R;
 import com.example.myapplication.RegisterActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -142,6 +143,7 @@ public class GetClassActivity extends AppCompatActivity {
                                         int idx = result[i].indexOf('_');
                                         classes.put(result[i].substring(idx + 1, result[i].lastIndexOf('(')), result[i].substring(0, idx));
                                     }
+                                    MyGlobals.getInstance().setMyClasses(classes);
                                     String uid = firebaseAuth.getCurrentUser().getUid();
                                     firebaseFirestore.collection("users").document(uid)
                                             .update("classes", classes)
