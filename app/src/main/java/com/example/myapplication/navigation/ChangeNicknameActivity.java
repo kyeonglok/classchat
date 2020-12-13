@@ -1,4 +1,4 @@
-package com.example.myapplication.Navigation;
+package com.example.myapplication.navigation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
