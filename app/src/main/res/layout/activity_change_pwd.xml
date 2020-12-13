@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="36dp"
+        android:layout_height="35dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="13dp"
+        android:background="@drawable/io_notification_btn_back"/>
+
+    <TextView
+        android:id="@+id/tv_change_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="9dp"
+        android:text="비밀번호 변경"
+        android:textColor="#363636"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_back" />
+
+    <TextView
+        android:id="@+id/tv_curpwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="현재 비밀번호"
+        android:textColor="#262626"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintLeft_toLeftOf="@id/tv_change_password"
+        app:layout_constraintTop_toBottomOf="@id/tv_change_password" />
+
+    <EditText
+        android:id="@+id/et_curpwd"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/mailcheck_btn_writingbox"
+        android:gravity="center_vertical"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:paddingLeft="11dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_change_password"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_curpwd" />
+
+    <TextView
+        android:id="@+id/tv_changepwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="새 비밀번호"
+        android:textColor="#262626"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintLeft_toLeftOf="@id/tv_change_password"
+        app:layout_constraintTop_toBottomOf="@id/et_curpwd" />
+
+
+    <EditText
+        android:id="@+id/et_changepwd"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/mailcheck_btn_writingbox"
+        android:inputType="textPassword"
+        android:paddingLeft="8dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:textSize="15sp"
+        app:layout_constraintRight_toRightOf="@id/et_curpwd"
+        app:layout_constraintLeft_toLeftOf="@id/tv_change_password"
+        app:layout_constraintTop_toBottomOf="@id/tv_changepwd" />
+
+    <TextView
+        android:id="@+id/tv_pwdcheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="새 비밀번호 확인"
+        android:textColor="#262626"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintLeft_toLeftOf="@id/tv_change_password"
+        app:layout_constraintTop_toBottomOf="@id/et_changepwd" />
+
+
+    <EditText
+        android:id="@+id/et_pwdcheck"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/mailcheck_btn_writingbox"
+        android:inputType="textPassword"
+        android:paddingLeft="8dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:textSize="15sp"
+        app:layout_constraintRight_toRightOf="@id/et_curpwd"
+        app:layout_constraintLeft_toLeftOf="@id/tv_change_password"
+        app:layout_constraintTop_toBottomOf="@id/tv_pwdcheck" />
+
+
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_width="74dp"
+        android:layout_height="36dp"
+        android:background="@drawable/btn_request_background"
+        android:text="변경하기"
+        android:layout_marginTop="50dp"
+
+        android:textColor="#989898"
+        app:layout_constraintTop_toBottomOf="@id/et_pwdcheck"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="468dp"
+        tools:ignore="MissingConstraints" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

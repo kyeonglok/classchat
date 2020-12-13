@@ -221,20 +221,6 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"/>
 
-            <Button
-                android:id="@+id/btn_changemajor"
-                android:text="학과 변경"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:paddingRight="6dp"
-                android:layout_gravity="center"
-                android:drawableRight="@drawable/mypagr_btn_next"
-                android:gravity="center_vertical"
-                android:paddingLeft="22dp"
-                android:background="@drawable/btn_mypage"/>
-
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"

@@ -41,11 +41,24 @@ class MyPageFragment : Fragment() {
             val intent = Intent(context,GetClassActivity::class.java)
             context?.startActivity(intent)
         }
+        btn_changenickname.setOnClickListener {
+            val intent = Intent(context,ChangeNicknameActivity::class.java)
+            context?.startActivity(intent)
+        }
+        btn_changepwd.setOnClickListener {
+            val intent = Intent(context,ChangePwdActivity::class.java)
+            context?.startActivity(intent)
+        }
         btn_logout.setOnClickListener {
             startActivity(Intent(activity, LoginActivity::class.java))
             activity?.finish()
             auth?.signOut()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tv_nickname.setText(MyGlobals.getInstance().getMyNickname())
     }
 
 }

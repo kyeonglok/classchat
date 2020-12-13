@@ -38,6 +38,7 @@ public class GetClassActivity extends AppCompatActivity {
     private EditText etPassword, etNumber;
     String studentNum, studentPassword;
     Button syncButton, backButton;
+    private HashMap<String, String> classes = new HashMap<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +138,6 @@ public class GetClassActivity extends AppCompatActivity {
                                 @Override
                                 public void onReceiveValue(String value) {
                                     Log.i("classchat", value);
-                                    HashMap<String, String> classes = new HashMap<>();
                                     String[] result = value.replace("\"", "").split("/");
                                     for (int i = 0; i < result.length; i++) {
                                         int idx = result[i].indexOf('_');
@@ -150,6 +150,7 @@ public class GetClassActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
+                                                    MyGlobals.getInstance().setMyClasses(classes);
                                                     finish();
                                                     Toast.makeText(GetClassActivity.this, "연동에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                                 }
