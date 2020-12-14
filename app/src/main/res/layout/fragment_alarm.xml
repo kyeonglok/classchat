@@ -21,5 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/alarmfragment_recyclerview"/>
+        <TextView
+            android:id="@+id/tv_no_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="표시할 이벤트나 알람이 없습니다."
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

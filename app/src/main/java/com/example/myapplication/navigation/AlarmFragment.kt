@@ -15,7 +15,9 @@ import com.example.myapplication.utils.dateUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.android.synthetic.main.fragment_alarm.*
 import kotlinx.android.synthetic.main.fragment_alarm.view.*
+import kotlinx.android.synthetic.main.fragment_board.*
 import kotlinx.android.synthetic.main.item_alarm.view.*
 import java.util.ArrayList
 
@@ -48,6 +50,14 @@ class AlarmFragment : Fragment() {
                             alarmDTOList.add(snapshot.toObject(AlarmDTO::class.java)!!)
                         }
                         alarmDTOList.sortByDescending { it.timestamp }
+                        if(alarmDTOList.size == 0){
+                            alarmfragment_recyclerview.visibility = View.GONE
+                            tv_no_alarm.visibility = View.VISIBLE
+                        }
+                        else{
+                            alarmfragment_recyclerview.visibility = View.VISIBLE
+                            tv_no_alarm.visibility = View.GONE
+                        }
                         notifyDataSetChanged()
                     }
             Log.d("alarm",alarmDTOList.toString())
