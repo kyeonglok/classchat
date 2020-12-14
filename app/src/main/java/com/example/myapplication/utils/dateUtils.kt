@@ -1,6 +1,8 @@
 package com.example.myapplication.utils
 
 import android.util.Log
+import java.text.SimpleDateFormat
+import java.util.*
 
 object dateUtils {
     enum class TimeValue(val value: Int,val maximum : Int, val msg : String) {
@@ -11,6 +13,15 @@ object dateUtils {
         MONTH(12,Int.MAX_VALUE,"년 전")
     }
 
+    fun getDateTime(s: String): String? {
+        try {
+            val sdf = SimpleDateFormat("MM/dd hh:mm")
+            val netDate = Date(s.toLong())
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return e.toString()
+        }
+    }
 
     fun parseTime(writeTime:Long?): String?{
         if(writeTime == null)

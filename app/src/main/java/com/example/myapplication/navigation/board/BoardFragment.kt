@@ -3,6 +3,7 @@ package com.example.myapplication.navigation.board
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,14 +35,17 @@ class BoardFragment : Fragment() {
         classSnapshot = null
         user = FirebaseAuth.getInstance().currentUser
         firestore = FirebaseFirestore.getInstance()
+        Log.i("oncreateView","oo")
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i("onViewCreated","ov")
         classListAdapter = ClassListRecyclerViewAdapter()
         view.boardFragment_recyclerview.adapter = classListAdapter
         view.boardFragment_recyclerview.layoutManager = LinearLayoutManager(activity)
+        Log.i("onViewCreated","done")
     }
     override fun onStop() {
         super.onStop()
@@ -53,6 +57,7 @@ class BoardFragment : Fragment() {
 
         init{
             val classes = MyGlobals.getInstance().myClasses
+            Log.i("init",classes.toString())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 classes.forEach{
                     k,v -> classList.add(ClassData(k,v))
@@ -66,6 +71,7 @@ class BoardFragment : Fragment() {
                 boardFragment_recyclerview.visibility = View.VISIBLE
                 tv_no_class.visibility = View.GONE
             }
+            notifyDataSetChanged()
             """
             var uid = FirebaseAuth.getInstance().currentUser?.uid
             Log.d("test ", uid.toString())

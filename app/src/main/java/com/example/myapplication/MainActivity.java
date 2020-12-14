@@ -7,14 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.myapplication.navigation.AlarmFragment;
 import com.example.myapplication.navigation.board.BoardFragment;
 import com.example.myapplication.navigation.ChatFragment;
-import com.example.myapplication.navigation.HomeFragment;
 import com.example.myapplication.navigation.MyPageFragment;
-import com.example.myapplication.utils.FcmPush;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,8 +23,6 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
 
-import kotlin.jvm.internal.markers.KMutableMap;
-
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -34,14 +30,14 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private Fragment boardFragment;
     private Fragment chatFragment;
-    private Fragment homeFragment;
+    private Fragment alarmFragment;
     private Fragment settingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        homeFragment = new HomeFragment();
+        alarmFragment = new AlarmFragment();
         chatFragment = new ChatFragment();
         boardFragment = new BoardFragment();
         settingFragment = new MyPageFragment();
@@ -54,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
             {
                 switch (menuItem.getItemId())
                 {
-                    case R.id.navigation_home:
+                    case R.id.navigation_board:
                         setFragment(0);
                         break;
                     case R.id.navigation_chat:
                         setFragment(1);
                         break;
-                    case R.id.navigation_board:
+                    case R.id.navigation_alarm:
                         setFragment(2);
                         break;
                     case R.id.navigation_setting:
@@ -94,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         ft = fm.beginTransaction();
         switch(n){
             case 0:
-                ft.replace(R.id.frameLayout,homeFragment);
+                ft.replace(R.id.frameLayout,boardFragment);
                 ft.commit();
                 break;
             case 1:
@@ -102,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.frameLayout,boardFragment);
+                ft.replace(R.id.frameLayout,alarmFragment);
                 ft.commit();
                 break;
             case 3:

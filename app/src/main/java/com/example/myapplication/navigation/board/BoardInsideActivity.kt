@@ -61,15 +61,7 @@ class BoardInsideActivity : AppCompatActivity() {
         super.onStop()
         boardSnapshot?.remove()
     }
-    private fun getDateTime(s: String): String? {
-        try {
-            val sdf = SimpleDateFormat("MM/dd hh:mm")
-            val netDate = Date(s.toLong())
-            return sdf.format(netDate)
-        } catch (e: Exception) {
-            return e.toString()
-        }
-    }
+
 
     inner class BoardInsideRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var boardDTOs : MutableList<boardDTO> = mutableListOf<boardDTO>()

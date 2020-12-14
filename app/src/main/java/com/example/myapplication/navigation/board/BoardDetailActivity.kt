@@ -76,7 +76,7 @@ class BoardDetailActivity : AppCompatActivity() {
         alarmDTO.kind = 1
         alarmDTO.message = message
         alarmDTO.timestamp = System.currentTimeMillis()
-
+        alarmDTO.targetBoardId = className
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
 
         var message = "누군가 당신의 글에 댓글을 남겼습니다 : $message"
@@ -90,6 +90,7 @@ class BoardDetailActivity : AppCompatActivity() {
         alarmDTO.uid = user?.uid
         alarmDTO.kind = 0
         alarmDTO.timestamp = System.currentTimeMillis()
+        alarmDTO.targetBoardId = className
 
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
         var message = "누군가 당신의 글에 좋아요를 눌렀습니다."

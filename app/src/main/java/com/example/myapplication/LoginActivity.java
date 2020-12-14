@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,11 +44,11 @@ public class LoginActivity extends Activity {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             MyGlobals.getInstance().setMyInfo(documentSnapshot.toObject(userDTO.class));
+                            finish();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
                         }
                     });
-            finish();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
         }
 
         etUsername = (EditText) findViewById(R.id.txtLoginEmail);
