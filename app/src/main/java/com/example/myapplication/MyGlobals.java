@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ public class MyGlobals {
         this.myEmail = user.getEmail();
         this.myImageUrl = user.getImageUrl();
         this.myClasses = user.getClasses();
+        Log.i("classchat", this.myNickname + " / " + this.myEmail + " / " + this.myImageUrl + " / " + this.myClasses);
     }
 
     public String getMyNickname()
