@@ -102,7 +102,10 @@ class BoardInsideActivity : AppCompatActivity() {
             viewHolder.tv_title.text = boardDTOs[position].title
             viewHolder.tv_content.text = boardDTOs[position].explain
             viewHolder.tv_like_count.text = "좋아요 "+boardDTOs[position].favoriteCount.toString()
-            viewHolder.tv_nickname.text = "익명"
+            if(boardDTOs[position].isAnony)
+                viewHolder.tv_nickname.text = "익명"
+            else
+                viewHolder.tv_nickname.text = boardDTOs[position].userNickname
             viewHolder.tv_time.text = dateUtils.parseTime(boardDTOs[position].timestamp)
             viewHolder.tv_comment_count.text = "댓글 " + boardDTOs[position].commentCount.toString()
 

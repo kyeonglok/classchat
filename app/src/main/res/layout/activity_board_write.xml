@@ -83,6 +83,15 @@
         android:layout_margin="10dp"
         android:background="@drawable/board_posting_btn_cam" />
 
-
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/check_board_anony"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="익명"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin = "30dp"
+        android:buttonTint="@color/colorPrimary" />
 
 </RelativeLayout>

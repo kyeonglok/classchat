@@ -22,16 +22,23 @@ import kotlinx.android.synthetic.main.item_alarm.view.*
 import java.util.ArrayList
 
 class AlarmFragment : Fragment() {
-
     var alarmSnapshot: ListenerRegistration? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_alarm, container, false)
-        view.alarmfragment_recyclerview.adapter = AlarmRecyclerViewAdapter()
-        view.alarmfragment_recyclerview.layoutManager = LinearLayoutManager(activity)
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.alarmfragment_recyclerview.adapter = AlarmRecyclerViewAdapter()
+        view.alarmfragment_recyclerview.layoutManager = LinearLayoutManager(activity)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        alarmSnapshot?.remove()
+    }
     inner class AlarmRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val alarmDTOList = ArrayList<AlarmDTO>()
 

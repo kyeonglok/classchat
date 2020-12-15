@@ -3,6 +3,7 @@ package com.example.myapplication.navigation.board
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.myapplication.MyGlobals
 import com.example.myapplication.model.boardDTO
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
@@ -61,10 +62,10 @@ class BoardWriteActivity : AppCompatActivity() {
         newBoard.timestamp = System.currentTimeMillis() * -1
         //게시물 제목
         newBoard.title = tv_title.text.toString()
-
+        newBoard.isAnony = check_board_anony.isChecked
         newBoard.boardClassId = classId
         newBoard.boardClassName = className
-
+        newBoard.userNickname = MyGlobals.getInstance().myNickname
         //게시물을 데이터를 생성 및 엑티비티 종료
         firestore?.collection("boards")?.document()?.set(newBoard)
 

@@ -14,12 +14,14 @@ data class boardDTO(
         var timestamp: Long? = null,
         var commentCount: Int = 0,
         var favoriteCount: Int = 0,
+        var isAnony: Boolean = true,
         var favorites: MutableMap<String, Boolean> = HashMap()) {
 
     data class Comment(var uid: String? = null,
                        var userId: String? = null,
                        var comment: String? = null,
-                       var timestamp: Long? = null)
+                       var timestamp: Long? = null,
+                       var isAnony: Boolean = true)
 }
 
 

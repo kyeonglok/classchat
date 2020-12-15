@@ -8,9 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.myapplication.MyGlobals
 import com.example.myapplication.model.boardDTO
 import com.example.myapplication.R
 import com.example.myapplication.model.AlarmDTO
+import com.example.myapplication.model.userDTO
 import com.example.myapplication.utils.FcmPush
 import com.example.myapplication.utils.dateUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +22,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_board_detail.*
+import kotlinx.android.synthetic.main.activity_board_detail.btn_heart
+import kotlinx.android.synthetic.main.activity_board_detail.img_profile
+import kotlinx.android.synthetic.main.fragment_mypage.*
+import kotlinx.android.synthetic.main.item_comment.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.toolbar_board_detail.*
 import java.text.SimpleDateFormat
@@ -54,7 +62,7 @@ class BoardDetailActivity : AppCompatActivity() {
             comment.comment = comment_edit_message.text.toString()
             comment.uid = FirebaseAuth.getInstance().currentUser!!.uid
             comment.timestamp = System.currentTimeMillis()
-
+            comment.isAnony = check_comment_anony.isChecked
             FirebaseFirestore.getInstance()
                     .collection("boards")
                     .document(boardId!!)
@@ -107,7 +115,24 @@ class BoardDetailActivity : AppCompatActivity() {
                     if(querySnapshot == null)return@addSnapshotListener
                     val content = querySnapshot.toObject(boardDTO::class.java)
                     destinationUid = content?.uid
-                    detailviewitem_profile_textview.text = "익명"
+                    if(content!!.isAnony) {
+                        detailviewitem_profile_textview.text = "익명"
+                    }
+                    else{
+                        firestore?.collection("users")?.document(content.uid!!)?.get()?.addOnCompleteListener {
+                            task ->
+                            if(task.isSuccessful){
+                                val board_user= task.getResult()?.toObject(userDTO::class.java)
+                                detailviewitem_profile_textview.text = board_user?.nickname
+                                Glide.with(this)
+                                        .load(board_user?.imageUrl)
+                                        .placeholder(R.drawable.mypage_img_profile)
+                                        .error(R.drawable.mypage_img_profile)
+                                        .apply(RequestOptions().circleCrop())
+                                        .into(img_profile)
+                            }
+                        }
+                    }
                     tv_board_detail_title.text = content!!.title
                     detailviewitem_explain_textview.text = content!!.explain
                     if (content.favorites.containsKey(FirebaseAuth.getInstance().currentUser!!.uid)) {
@@ -177,8 +202,24 @@ class BoardDetailActivity : AppCompatActivity() {
 
             viewHolder.tv_time.text = dateUtils.parseTime(commentDTOs[position].timestamp)
             viewHolder.tv_content.text = commentDTOs[position].comment
-            viewHolder.tv_nickname.text = "익명"
-
+            if(commentDTOs[position].isAnony) {
+                viewHolder.tv_nickname.text = "익명"
+            }
+            else{
+                firestore?.collection("users")?.document(commentDTOs[position].uid!!)?.get()?.addOnCompleteListener {
+                    task ->
+                    if(task.isSuccessful){
+                        val comment_user= task.getResult()?.toObject(userDTO::class.java)
+                        viewHolder.tv_nickname.text = comment_user?.nickname
+                        Glide.with(holder.itemView.context)
+                                .load(comment_user?.imageUrl)
+                                .placeholder(R.drawable.mypage_img_profile)
+                                .error(R.drawable.mypage_img_profile)
+                                .apply(RequestOptions().circleCrop())
+                                .into(viewHolder.img_comment_profile)
+                    }
+                }
+            }
 
         }
 
