@@ -113,6 +113,7 @@ class BoardInsideActivity : AppCompatActivity() {
                 var intent = Intent(v.context,BoardDetailActivity::class.java)
                 intent.putExtra("boardId",boardIdList[position])
                 intent.putExtra("className",boardDTOs[position].boardClassName)
+                intent.putExtra("writer",boardDTOs[position].uid)
                 v.context.startActivity(intent)
             }
         }

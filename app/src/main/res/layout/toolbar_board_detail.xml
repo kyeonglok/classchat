@@ -28,7 +28,7 @@
             android:text="네트워크개론 게시판"/>
 
         <Button
-            android:id="@+id/btn_option"
+            android:id="@+id/btn_detail_option"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_gravity="right"

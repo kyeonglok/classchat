@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/img_comment_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginRight="9dp"
             android:background="@drawable/class_board_detail_reply_ic_replyprofile"
             app:layout_constraintStart_toStartOf="parent"

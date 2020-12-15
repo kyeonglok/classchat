@@ -58,11 +58,13 @@ class AlarmFragment : Fragment() {
                         }
                         alarmDTOList.sortByDescending { it.timestamp }
                         if(alarmDTOList.size == 0){
-                            alarmfragment_recyclerview.visibility = View.GONE
+                            if(alarmfragment_recyclerview != null)
+                                alarmfragment_recyclerview.visibility = View.GONE
                             tv_no_alarm.visibility = View.VISIBLE
                         }
                         else{
-                            alarmfragment_recyclerview.visibility = View.VISIBLE
+                            if(alarmfragment_recyclerview != null)
+                                alarmfragment_recyclerview.visibility = View.VISIBLE
                             tv_no_alarm.visibility = View.GONE
                         }
                         notifyDataSetChanged()

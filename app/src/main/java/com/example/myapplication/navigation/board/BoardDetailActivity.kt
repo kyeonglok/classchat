@@ -1,11 +1,16 @@
 package com.example.myapplication.navigation.board
 
+import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,6 +33,8 @@ import kotlinx.android.synthetic.main.fragment_mypage.*
 import kotlinx.android.synthetic.main.item_comment.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.toolbar_board_detail.*
+import kotlinx.android.synthetic.main.toolbar_board_detail.btn_back
+import kotlinx.android.synthetic.main.toolbar_board_inside.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,6 +45,7 @@ class BoardDetailActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null
     var destinationUid : String? = null
     var user : FirebaseUser?= null
+    var writer : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_detail)
@@ -45,11 +53,13 @@ class BoardDetailActivity : AppCompatActivity() {
         user = FirebaseAuth.getInstance().currentUser
         boardId = intent.getStringExtra("boardId")
         className = intent.getStringExtra("className")
+        writer = intent.getStringExtra("writer")
         tv_detail_classname.text = className + " 게시판"
-        rv_comment.adapter = CommentRecyclerViewAdapter()
-        rv_comment.layoutManager = LinearLayoutManager(this)
         btn_heart.setOnClickListener { favoriteEvent() }
         bindContent()
+        rv_comment.adapter = CommentRecyclerViewAdapter()
+        rv_comment.layoutManager = LinearLayoutManager(this)
+
         btn_back.setOnClickListener {
             finish()
         }
@@ -73,7 +83,42 @@ class BoardDetailActivity : AppCompatActivity() {
             comment_edit_message.setText("")
 
         }
-        
+        if (user?.uid == writer) {
+            btn_detail_option.setOnClickListener {
+                var pop = PopupMenu(this, btn_detail_option)
+
+                menuInflater.inflate(R.menu.menu_board, pop.menu)
+
+                pop.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.board_menu_delete ->  showDeleteAlert()
+
+                    }
+                    false
+                }
+                pop.show()
+            }
+        }
+
+    }
+
+
+    fun showDeleteAlert(){
+        AlertDialog.Builder(this)
+                .setTitle("정말 삭제하시겠습니까?")
+                .setMessage("이 글에 대한 댓글 까지 모두 삭제됩니다.")
+                .setPositiveButton("삭제") {
+                    dialogInterface: DialogInterface, i: Int ->
+                    firestore?.collection("boards")?.document(boardId!!)?.delete()
+                            ?.addOnSuccessListener {
+                                finish()
+                            }?.addOnFailureListener {
+                                e -> Log.w("Error","Error deleting document",e)
+                    }
+                }
+                .setNegativeButton("취소") { dialogInterface: DialogInterface, i: Int -> }
+                .show()
+
     }
     fun commentAlarm(destinationUid: String, message: String) {
 
@@ -114,6 +159,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if(querySnapshot == null)return@addSnapshotListener
                     val content = querySnapshot.toObject(boardDTO::class.java)
+                    if(content == null)return@addSnapshotListener
                     destinationUid = content?.uid
                     if(content!!.isAnony) {
                         detailviewitem_profile_textview.text = "익명"
@@ -124,12 +170,14 @@ class BoardDetailActivity : AppCompatActivity() {
                             if(task.isSuccessful){
                                 val board_user= task.getResult()?.toObject(userDTO::class.java)
                                 detailviewitem_profile_textview.text = board_user?.nickname
-                                Glide.with(this)
-                                        .load(board_user?.imageUrl)
-                                        .placeholder(R.drawable.mypage_img_profile)
-                                        .error(R.drawable.mypage_img_profile)
-                                        .apply(RequestOptions().circleCrop())
-                                        .into(img_profile)
+                                if(this!=null) {
+                                    Glide.with(this)
+                                            .load(board_user?.imageUrl)
+                                            .placeholder(R.drawable.mypage_img_profile)
+                                            .error(R.drawable.mypage_img_profile)
+                                            .apply(RequestOptions().circleCrop())
+                                            .into(img_profile)
+                                }
                             }
                         }
                     }
@@ -204,6 +252,10 @@ class BoardDetailActivity : AppCompatActivity() {
             viewHolder.tv_content.text = commentDTOs[position].comment
             if(commentDTOs[position].isAnony) {
                 viewHolder.tv_nickname.text = "익명"
+                if(commentDTOs[position].uid==writer){
+                    viewHolder.tv_nickname.text = viewHolder.tv_nickname.text.toString() + "(글쓴이)"
+                    viewHolder.tv_nickname.setTextColor(resources.getColor(R.color.colorPrimary))
+                }
             }
             else{
                 firestore?.collection("users")?.document(commentDTOs[position].uid!!)?.get()?.addOnCompleteListener {
@@ -217,6 +269,8 @@ class BoardDetailActivity : AppCompatActivity() {
                                 .error(R.drawable.mypage_img_profile)
                                 .apply(RequestOptions().circleCrop())
                                 .into(viewHolder.img_comment_profile)
+                        if(commentDTOs[position].uid == writer)
+                            viewHolder.tv_nickname.setTextColor(resources.getColor(R.color.colorPrimary))
                     }
                 }
             }
