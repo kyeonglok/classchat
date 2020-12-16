@@ -41,7 +41,6 @@ public class ChatFragment extends Fragment {
     private ClassAdapter classAdapter;
     private List<Users> mUsers;
     private FirebaseUser fUser;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class ChatFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
 
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-        System.out.println("curr user is : "+ fUser.getEmail());
         mUsers = new ArrayList<>();
         ReadUsers();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

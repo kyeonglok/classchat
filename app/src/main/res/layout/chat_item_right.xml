@@ -31,10 +31,9 @@
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/background_right"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="hello"
-            android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/chat_time"
@@ -46,7 +45,7 @@
             android:layout_marginBottom="12dp"
             android:layout_toStartOf="@+id/show_message"
             android:layout_toLeftOf="@+id/show_message"
-            android:text="TextView"
+            android:text="오후 12:33"
             android:textSize="10sp" />
     </RelativeLayout>
 </RelativeLayout>

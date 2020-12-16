@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.Adapter.MessageAdapter;
 import com.example.myapplication.Usermodel.Chat;
+import com.example.myapplication.utils.anonyNameUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,7 +59,7 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     EditText textMessage;
     ImageButton imgbtn;
-    ImageButton backbtn;
+    ImageView backbtn;
     Intent intent;
     TextView nickname;
     TextView participant;
@@ -68,13 +70,15 @@ public class MessageActivity extends AppCompatActivity {
     String sender_id;
     String sender_nickname;
     String rcv_nick;
+
+    String userAnonyName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        classname = findViewById(R.id.textView3);
+        classname = findViewById(R.id.tv_classname);
         imgbtn = findViewById(R.id.btn_send);
         backbtn = findViewById(R.id.backbtn);
         nickname = findViewById(R.id.nickname);
@@ -95,9 +99,9 @@ public class MessageActivity extends AppCompatActivity {
         class_code = arr[1];
         classname.setText(class_name);
 
-
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-
+        userAnonyName = "익명의 " + anonyNameUtils.INSTANCE.getAnonyName(fuser.getUid(),class_name);
+        Log.i("anonyName",userAnonyName);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference doc_ref = db.collection("Chats").document(class_code);
@@ -124,7 +128,9 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
         sender_nickname = null;
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        set_nickname(userAnonyName);
+        /*db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -136,7 +142,7 @@ public class MessageActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
         imgbtn.setOnClickListener(new View.OnClickListener() {//msg send button
             @Override
             public void onClick(View v) {

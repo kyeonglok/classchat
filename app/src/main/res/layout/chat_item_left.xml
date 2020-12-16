@@ -8,7 +8,7 @@
         android:id="@+id/nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nick name" />
+        android:text="익명의 홍명보" />
 
     <TextView
         android:id="@+id/show_message"
@@ -32,7 +32,7 @@
         android:layout_marginBottom="12dp"
         android:layout_toEndOf="@+id/show_message"
         android:layout_toRightOf="@+id/show_message"
-        android:text="TextView"
+        android:text="오후 3:33"
         android:textSize="10sp" />
 
 

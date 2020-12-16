@@ -7,86 +7,78 @@
     tools:context=".MessageActivity">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_schedule"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#DAF1BF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/backbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/actionModeCloseDrawable"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="28dp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="class_name"
-            android:textColor="@color/text1"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <TextView
-            android:id="@+id/participant_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="17"
-            android:textColor="@color/text2"
-            android:textSize="14sp"
-            tools:layout_editor_absoluteX="243dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-
-    </androidx.appcompat.widget.Toolbar>
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_message_activity" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="401dp"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
         android:layout_height="622dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/chat_item_left"
+        android:layout_marginBottom="88dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_schedule"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <RelativeLayout
-        android:id="@+id/bottom"
-        android:layout_width="412dp"
-        android:layout_height="53dp"
-        android:background="#C8E3A9"
-        android:padding="5dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/text_send"
-            android:layout_width="353dp"
-            android:layout_height="43dp"
-            android:background="@android:color/transparent"
-            android:hint="Type Your Message..."
-            tools:background="#FFFFFF" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/btn_send"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@android:drawable/ic_menu_send" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="36dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/chatting_btn_more"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </RelativeLayout>
+            </ImageView>
+
+            <EditText
+                android:id="@+id/text_send"
+                android:layout_width="300dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="48dp"
+                android:background="@drawable/chatting_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:hint="메시지를 입력하세요.">
+
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginRight="7dp"
+                android:background="#ffffff"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/class_board_detail_btn_send"
+                app:layout_constraintBottom_toBottomOf="@id/text_send"
+                app:layout_constraintEnd_toEndOf="@id/text_send"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
