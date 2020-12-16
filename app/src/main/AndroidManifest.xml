@@ -20,6 +20,7 @@
         <activity android:name=".navigation.board.BoardInsideActivity"/>
         <activity android:name=".navigation.board.BoardDetailActivity"/>
         <activity android:name=".navigation.board.BoardWriteActivity"/>
+        <activity android:name=".MessageActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
