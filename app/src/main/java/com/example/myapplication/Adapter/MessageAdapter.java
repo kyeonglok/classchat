@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.ReportActivity;
 import com.example.myapplication.Usermodel.Chat;
 import com.example.myapplication.Usermodel.Users;
 import com.google.firebase.Timestamp;
@@ -74,8 +75,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.showMessage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //Intent i = new Intent(ReportActivity.class);
-
+                Intent i = new Intent(context, ReportActivity.class);
+                i.putExtra("id",chat.getSender_id());
+                i.putExtra("msg",chat.getMsg());
+                i.putExtra("time",chat.getTime());
+                context.startActivity(i);
                 return true;
             }
         });

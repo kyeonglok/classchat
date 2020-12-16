@@ -21,6 +21,8 @@
         <activity android:name=".navigation.board.BoardDetailActivity"/>
         <activity android:name=".navigation.board.BoardWriteActivity"/>
         <activity android:name=".MessageActivity"/>
+        <activity android:name=".ReportActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
