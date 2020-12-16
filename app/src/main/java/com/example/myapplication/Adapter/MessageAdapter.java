@@ -41,13 +41,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView showMessage,nickname,chattime,participant;
+        public TextView showMessage,nickname,chattime,participant,msgviewtime;
 
         public ViewHolder(View itemView){
             super(itemView);
             showMessage = itemView.findViewById(R.id.show_message);
             nickname = itemView.findViewById(R.id.nickname);
             chattime = itemView.findViewById(R.id.chat_time);
+            msgviewtime = itemView.findViewById(R.id.msg_view_time);
         }
     }
 
@@ -72,6 +73,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.showMessage.setText(chat.getMsg());
         holder.nickname.setText(chat.getSender_nick());
         holder.chattime.setText(chat.getTime());
+        int num = Integer.parseInt(chat.getView_time());
+        if(num > 0)
+            holder.msgviewtime.setText(chat.getView_time());
+        else
+            holder.msgviewtime.setText("");
         holder.showMessage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

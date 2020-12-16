@@ -8,23 +8,24 @@ public class Chat {
     private String msg;
     private String time;
     private String participant;
+    private String view_time;
 
-    public Chat(String sender_id,String sender_nick, String receiver, String msg,String time,String participant) {
+    public Chat(String sender_id,String sender_nick, String receiver, String msg,String time,String participant,String view_time) {
         this.sender_id = sender_id;
         this.sender_nick = sender_nick;
         this.receiver = receiver;
         this.msg = msg;
         this.time = time;
         this.participant = participant;
-
+        this.view_time = view_time;
     }
     public Chat() {
     }
 
-    public String getSender_id() {
-        return sender_id;
-    }
+    public String getSender_id() {return sender_id;}
+
     public String getParticipant(){return participant;}
+
     public void setSender_id(String sender) {
         this.sender_id = sender;
     }
@@ -54,4 +55,6 @@ public class Chat {
     }
 
     public String getTime(){return time;}
+
+    public String getView_time(){return view_time;}
 }
