@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/background"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="수업 게시판"
+            android:paddingLeft="8dp"
             android:textSize="15sp"
             android:layout_marginLeft="7dp"
             app:layout_constraintStart_toEndOf="@id/img_class_board"
@@ -46,6 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_board_title"
+        android:paddingLeft="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_class"
         android:layout_width="match_parent"
