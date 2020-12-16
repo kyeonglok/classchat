@@ -62,7 +62,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         public TextView recent_msg;
         public ViewHolder(View itemView){
             super(itemView);
-            recent_msg = itemView.findViewById(R.id.final_msg_time);
             classname = itemView.findViewById(R.id.textViewprofile);
         }
     }

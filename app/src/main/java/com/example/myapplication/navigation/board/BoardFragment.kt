@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.MyGlobals
@@ -26,9 +27,6 @@ class BoardFragment : Fragment() {
     var firestore : FirebaseFirestore? = null
     var classSnapshot: ListenerRegistration? = null
     lateinit var classListAdapter : ClassListRecyclerViewAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_board, container, false)
@@ -45,6 +43,7 @@ class BoardFragment : Fragment() {
         classListAdapter = ClassListRecyclerViewAdapter()
         view.boardFragment_recyclerview.adapter = classListAdapter
         view.boardFragment_recyclerview.layoutManager = LinearLayoutManager(activity)
+        view.boardFragment_recyclerview.addItemDecoration(DividerItemDecoration(boardFragment_recyclerview.context, DividerItemDecoration.VERTICAL))
         Log.i("onViewCreated","done")
     }
     override fun onStop() {
@@ -52,7 +51,7 @@ class BoardFragment : Fragment() {
         classSnapshot?.remove()
     }
 
-    inner class ClassListRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    inner class ClassListRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         var classList : MutableList<ClassData> = mutableListOf<ClassData>()
 
         init{
